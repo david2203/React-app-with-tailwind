@@ -11,7 +11,8 @@ const arrayOfProducts = [
 
 function Products() {
     return (
-        <div>
+        <div className="flex flex-wrap mx-auto">
+
             {arrayOfProducts.map((product)=>{ return(
                  <Card productName={product.productName} price={product.price}/>
             )})}

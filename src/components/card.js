@@ -24,7 +24,8 @@ function Card({productName, price}) {
     return (
         
         <>
-            <div className="py-6 flex flex-row mx-96" >
+        
+            <div className="py-6 mx-6" >
   <div className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
     <div className="w-1/3 bg-cover" > <img src={headphone1}/>
     </div> 
@@ -55,7 +56,7 @@ function Card({productName, price}) {
     </div>
   </div>
 </div>
-            
+
         </>
         
     )
