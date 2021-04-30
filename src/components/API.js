@@ -22,8 +22,8 @@ function API() {
             {/* Data: {data.map((singleData)=>{return( <h1 key={singleData.Id}> {singleData.title} </h1>
                 )})} */}
 
-          <img src={fire}/>
-            -data kommer här
+          <img src={fire} alt="Image description"/>
+            {data}
            
         </div>
     )
