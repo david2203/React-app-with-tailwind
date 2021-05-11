@@ -1,43 +1,62 @@
 import React, {useState} from "react";
-import {Route, BrowserRouter as Router, Link} from "react-router-dom";
-import Register from "./register";
+import {Link, useHistory} from "react-router-dom";
+import axios from "axios";
 
 
 export default function Login() {
 
     const initialValues = {
-        username:" ",
-        password:" "
+        email:"",
+        password:""
     }
     const [formValues, setFormValues] = useState(initialValues)
-
-    function handleOnSubmit(e) {
-
-        e.preventDefault();
-
-        console.log("name: ", formValues.productName, "price: ", formValues.price)
-    }
+    const [error, setError] = useState("")
     
+    
+    const history = useHistory();
+    
+
 
     function handleOnChange(e) {
 
-        setFormValues(
-            {
-           ...formValues,[e.target.name]:e.target.value
-            }
-        )
-        
+        setFormValues({...formValues,[e.target.name]:e.target.value})
     }
-    return (
-        <>
-           {/* <form onSubmit={handleOnSubmit}>
 
-               <input placeholder="username" value ={formValues.username} name="username" onChange={handleOnChange}/>
-               <input placeholder="password" value ={formValues.password} name="password" onChange={handleOnChange}/>
-               
-               <button>Log in</button>
-           </form> */}
+    
+    
+    function handleOnSubmit(e) {
+        e.preventDefault();
+
+        axios
+        .post('http://localhost:1337/auth/local', {
+          identifier: formValues.email,
+          password: formValues.password,
+        })
+        .then(response => {
+          // Handle success
+          console.log('User profile', response.data.user);
+          console.log('User token', response.data.jwt);
+          localStorage.setItem("jwt", response.data.jwt)
+          history.push("/products")
+          window.location.reload()
+
+          console.log("user data", response.data)
+          
+          
+        }).catch( (error) => {
+            // Handle error.
+            
+            setError("Dina upgifter stämmer inte!")
+          });
+    }
+    
+
+
         
+    
+    return (
+        <>      
+         
            <div className="font-sans">
             <div className="relative min-h-screen flex flex-col sm:justify-center items-center bg-gray-100 ">
                 <div className="relative sm:max-w-sm w-full">
@@ -47,14 +66,14 @@ export default function Login() {
                         <label for="" className="block mt-3 text-sm text-gray-700 text-center font-semibold">
                             Login
                         </label>
-                        <form method="#" action="#" className="mt-10">
-                                           
+                        <form method="POST" onSubmit={handleOnSubmit} action="#" className="mt-10">
+                                <h1>{error}</h1>         
                             <div>
-                                <input type="email" placeholder="Email" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"/>
+                                <input type="email" name="email" value={formValues.email} onChange={handleOnChange} placeholder="Email" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"/>
                             </div>
                 
                             <div className="mt-7">                
-                                <input type="password" placeholder="Password" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"/>                           
+                                <input type="password" name="password" value={formValues.password} onChange={handleOnChange} placeholder="Password" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0"/>                           
                             </div>
 
                             <div className="mt-7 flex">
@@ -66,7 +85,7 @@ export default function Login() {
                                 </label>
                 
                                <div className="w-full text-right">     
-                                    <a className="underline text-sm text-gray-600 hover:text-gray-900" href="#">
+                                    <a className="underline text-sm text-gray-600 hover:text-gray-900" href="will be inserted">
                                         Forgot your password?
                                     </a>                                  
                                </div>
@@ -78,35 +97,14 @@ export default function Login() {
                                 </button>
                             </div>
                 
-                            <div className="flex mt-7 items-center text-center">
-                                <hr className="border-gray-300 border-1 w-full rounded-md"/>
-                                <label className="block font-medium text-sm text-gray-600 w-full">
-                                    Log in with
-                                </label>
-                                <hr className="border-gray-300 border-1 w-full rounded-md"/>
-                            </div>
-                
-                            <div className="flex mt-7 justify-center w-full">
-                                <button className="mr-5 bg-blue-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-                                    
-                                    Facebook
-                                </button>
-                
-                                <button className="bg-red-500 border-none px-4 py-2 rounded-xl cursor-pointer text-white shadow-xl hover:shadow-inner transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-                                    
-                                    Google
-                                </button>
-                            </div>
+                            
                 
                              <div className="mt-7">
                                 <div className="flex justify-center items-center">
                                     <label className="mr-2" >Are you new ?</label>
-                                    <Router>
-
+            
                                     <Link className="text-blue-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105" to="/register">Register!</Link> 
-                                    <Route path="/register" exact component={Register}/>
-                                    </Router>
-                                    
+                                   
                                 </div>
                             </div>
                         </form>

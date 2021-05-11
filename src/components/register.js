@@ -1,12 +1,13 @@
 import React, {useState} from 'react'
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 
 
 
+
 function Register() {
-    let reg = false;
-    const [regState, setRegState] = useState(reg);
+    
+    const [regState, setRegState] = useState(false);
     
     console.log(regState)
     const initialValues = {
@@ -16,6 +17,7 @@ function Register() {
     }
 
     const [registerValues, setRegisterValues] = useState(initialValues)
+    const history = useHistory()    
 
     function handleOnChange(e) {
 
@@ -31,75 +33,37 @@ function Register() {
                 username: registerValues.username,
                 email: registerValues.email,
                 password: registerValues.password
-            })
+            }).then( (e)=> { if(e.data.user)
+                history.push("/login")
+                setRegState(true) }).catch((err)=> {console.log(err)})
 
-            setRegState(true)
+            
            
             console.log(response)
 
     
     }
 
-    // useEffect(() => {
-    //     const registerUser = async () => {
-    //         const response = await axios.post('http://localhost:1337/auth/local/register', {
-    //             username: registerValues.username,
-    //             email: registerValues.email,
-    //             password: registerValues.password
-    //         })
-
-    //         console.log(response)
-
-    //     }
-
-    // //    registerUser()
-
-
-    //     const loginUser = async()=> {
-    //       const res=   await axios
-    //         .post('http://localhost:1337/auth/local', {
-    //           identifier: 'user@strapi.io',
-    //           password: 'strapiPassword',
-    //         })
-
-    //         console.log("login response" , res)
-    //     }
-
-    //    // loginUser();
-
-    //     //"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjE5NzcxMTg0LCJleHAiOjE2MjIzNjMxODR9.TlS1oiLpE39bt3BImgdypSlmvwCrBbpb8XLcqGgfjms"
-
-       
-
-
-    // }, [])
-
-
-
-if (regState) {
-    return(
-        <>
-            <h1>You can now proceed to login:</h1>
-            <Link to="/login"> Login </Link>
-        </>
-    )
-}
-
-if (!regState) {
     return (
-        <div>
-        <h1>  Register User    </h1> 
+        <>
+        {regState ? (
+    <div>
+        <h1> You can now proceed to login: </h1>
+        <Link to="/login"> Login </Link>
+    </div>
 
+):( 
+<div>
         <div className="container max-w-full mx-auto md:py-24 px-6">
 <div className="max-w-sm mx-auto px-6">
     <div className="relative flex flex-wrap">
         <div className="w-full relative">
             <div className="md:mt-6">
                 <div className="text-center font-semibold text-black">
-                    Lorem ipsum dolor
+                    Register below
                 </div>
                 <div className="text-center font-base text-black">
-                    Sed ut perspiciatis unde?
+                    
                 </div>
                 <form className="mt-8" x-data="{password: '',password_confirm: ''}" onSubmit={handleOnSubmit}>
                     <div className="mx-auto max-w-lg ">
@@ -163,11 +127,11 @@ if (!regState) {
                             <label className="block text-gray-500 font-bold my-4 flex items-center">
                                 <input className="leading-loose text-pink-600 top-0" type="checkbox"/>
                                 <span className="ml-2 text-sm py-2 text-gray-600 text-left">Accept the
-                                      <a href="#"
+                                      <a href="will be inserted"
                                          className="font-semibold text-black border-b-2 border-gray-200 hover:border-gray-500">
                                        Terms and Conditions of the site
                                       </a>and
-                                      <a href="#"
+                                      <a href="will be inserted"
                                          className="font-semibold text-black border-b-2 border-gray-200 hover:border-gray-500">
                                         the information data policy.</a>
                                 </span>
@@ -182,7 +146,7 @@ if (!regState) {
                 </form>
 
                 <div className="text-sm font-semibold block sm:hidden py-6 flex justify-center">
-                    <a href="#"
+                    <a href="will be inserted"
                        className="text-black font-normal border-b-2 border-gray-200 hover:border-teal-500">You're already member?
                         <span className="text-black font-semibold">
         Login
@@ -198,9 +162,13 @@ if (!regState) {
 
 
     </div>
-    )
-
+    
+)
 }
+</>
+)
+
+
 }
 
 export default Register;
