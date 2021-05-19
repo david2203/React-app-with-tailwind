@@ -10,6 +10,7 @@ import AddProduct from "./addProduct";
 import Loggout from "./loggout";
 import ForgotPassword from "./forgotPassword";
 import Payment from "./payment";
+import AddExpert from "./addExpert"
 
 
 
@@ -24,6 +25,7 @@ export default function AppRoute() {
 
             <Menu/>
 
+            
             <Route path="/products" exact component={Products} />
             <Route path="/payment" exact component={Payment} />
             <Route path="/" exact component={Products}/>
@@ -34,6 +36,8 @@ export default function AppRoute() {
             <Route path="/addProduct" exact component={AddProduct}/>
             <Route path="/loggout" exact component={Loggout}/>
             <Route path="/forgotpassword" exact component={ForgotPassword}/>
+            <Route path="/addExpert" exact component={AddExpert}/>
+
         
             </Router>
             

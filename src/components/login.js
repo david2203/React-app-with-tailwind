@@ -37,6 +37,9 @@ export default function Login() {
           console.log('User profile', response.data.user);
           console.log('User token', response.data.jwt);
           localStorage.setItem("jwt", response.data.jwt)
+          localStorage.setItem("userId", response.data.user.id)
+          localStorage.setItem("userEmail", response.data.user.email)
+
           history.push("/products")
           window.location.reload()
 

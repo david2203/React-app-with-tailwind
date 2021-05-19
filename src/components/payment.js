@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import axios from "axios";
-import ModalComponent from "./modal"
+
 
 function Payment() {
 
@@ -22,7 +22,7 @@ function Payment() {
     
     return (
         <div>
-            <ModalComponent/>
+            
         </div>
     )
 }

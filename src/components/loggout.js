@@ -27,6 +27,7 @@ function Loggout() {
                 
                 <div className="text-center font-base text-black">
                 Are you sure you want to loggout?
+                
                 </div>
        
         
