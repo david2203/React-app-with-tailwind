@@ -36,6 +36,8 @@ function Menu() {
 
 <Link to="/addExpert" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add expert</Link>
 
+<Link to="/purchases" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">My purchases</Link>
+
 <Link to="/loggout" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Loggout</Link>
 
 

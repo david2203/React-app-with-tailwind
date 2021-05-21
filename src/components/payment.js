@@ -22,7 +22,7 @@ function Payment() {
     
     return (
         <div>
-            
+            {bookings}
         </div>
     )
 }

@@ -6,9 +6,9 @@ import axios from "axios";
 function AddProduct() {
     //initial values
     const initialValues = {
-        name:"",
-        description:"",
-        price:0
+        Name:"",
+        Description:"",
+        Price:0
     }
 
     //state
@@ -26,14 +26,14 @@ function AddProduct() {
     //on submit
     function handleOnSubmit(e) {
         e.preventDefault()
-        console.log(addProductValues)
+       
 
         axios.post("http://localhost:1337/products", {
-            name:addProductValues.name,
-            description:addProductValues.description,
-            price:addProductValues.price
+            Name:addProductValues.name,
+            Description:addProductValues.description,
+            Price:addProductValues.price
         }).then ( (res)=> {
-            console.log(res.data)
+            
 
             const formData = new FormData()
             formData.append("files", fileData)
@@ -41,7 +41,7 @@ function AddProduct() {
             //sql liknande mapping
             formData.append("ref", "product")
             formData.append("refId", res.data.id)
-            formData.append("field", "img")
+            formData.append("field", "Img")
 
 
             axios.post("http://localhost:1337/upload",formData)
@@ -59,7 +59,7 @@ function AddProduct() {
 
     return (
         <>
-       <form className="mt-8" x-data="{password: '',password_confirm: ''}" onSubmit={handleOnSubmit}>
+       <form className="mt-8" onSubmit={handleOnSubmit}>
             <h1>Product info:</h1>
                     <div className="mx-auto max-w-lg ">
                         <div className="py-1">

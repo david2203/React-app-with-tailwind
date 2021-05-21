@@ -3,15 +3,10 @@ import axios from "axios";
 import Card from "./card";
 
 
-
-
-
 function ProductList() {
 
     const [products, setProducts] = useState([]);
     const [loadPage, setLoadPage] = useState(2)
-    
-
     
     useEffect(()=> {
 
@@ -19,7 +14,7 @@ function ProductList() {
  
         const fetchProduct = async()=>{
            const response =  await axios.get(`http://localhost:1337/products?_limit=${loadPage}`)
-           console.log(response.data)
+           
           setProducts(response.data)
 
         }
@@ -39,20 +34,31 @@ function ProductList() {
 
     return (
         <>
-        <div className="flex flex-wrap mx-auto">
+        <div className="flex items-center justify-center flex-wrap mx-auto">
             
-            {products.map((product)=>{ return(
-                 <Card key={product.id} productId={product.id} image={product.img}productName={product.name} price={product.price} description={product.description}/>
-            )})}
+            {products.map((product)=>{ 
+                
+                return(
+                 <Card key={product.id} image={product.Img} productName={product.Name} price={product.Price} description={product.Description}/>
+                )
+            })}
             
-        </div>
+            </div>
        { loadPage <= products.length ? (
-        <button onClick={loadMore}>Load more</button>
+        <button
+        className="mt-3 text-lg font-semibold 
+        bg-black w-full text-white rounded-lg 
+        px-6 py-3 block shadow-xl hover:bg-gray-700"
+        onClick={loadMore}>Load more</button>
        ):
-        (<button onClick={showLess}>Show less</button>)
+        (<button
+            className="mt-3 text-lg font-semibold 
+            bg-black w-full text-white rounded-lg 
+            px-6 py-3 block shadow-xl hover:bg-gray-700"
+        onClick={showLess}>Show less</button>)
        }
 
-        </>
+    </>
     )
 }
 

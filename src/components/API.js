@@ -9,7 +9,7 @@ function API() {
     useEffect(()=> {
         
         const fetchData = async()=> {
-            const response = await axios.get("https://jsonplaceholder.typicode.com/todos")
+            const response = await axios.get("https://localhost:1337/bookings?user_premission_user.id=14")
             const res = response.data
             setData(res)
         }
@@ -22,8 +22,7 @@ function API() {
             {/* Data: {data.map((singleData)=>{return( <h1 key={singleData.Id}> {singleData.title} </h1>
                 )})} */}
 
-          <img src={fire} alt="Image description"/>
-            {data}
+         <div> </div>
            
         </div>
     )

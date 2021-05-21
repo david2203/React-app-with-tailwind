@@ -10,7 +10,8 @@ import AddProduct from "./addProduct";
 import Loggout from "./loggout";
 import ForgotPassword from "./forgotPassword";
 import Payment from "./payment";
-import AddExpert from "./addExpert"
+import AddExpert from "./addExpert";
+import MyPurchases from "./MyPurchases"
 
 
 
@@ -37,6 +38,8 @@ export default function AppRoute() {
             <Route path="/loggout" exact component={Loggout}/>
             <Route path="/forgotpassword" exact component={ForgotPassword}/>
             <Route path="/addExpert" exact component={AddExpert}/>
+            <Route path="/purchases" exact component={MyPurchases}/>
+
 
         
             </Router>
