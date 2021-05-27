@@ -1,9 +1,22 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from "axios";
 
 
 
 function AddProduct() {
+
+    const [isAdmin, setIsAdmin] = useState(false)
+    
+
+    useEffect ( ()=>{
+        const userId = localStorage.getItem("userId")
+        const fetchRole = async()=>{
+        const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
+        setIsAdmin(response.data[0].isAdmin)
+    }
+    fetchRole()
+
+    },[])
     //initial values
     const initialValues = {
         Name:"",
@@ -16,7 +29,6 @@ function AddProduct() {
     const [fileData, setFileData] = useState()
     //onhandleChange
     function handleOnChange(e) {
-        
         setAddProductValues({...addProductValues,[e.target.name]:e.target.value})
     }
     function handleOnChangeImg(e) {
@@ -59,7 +71,8 @@ function AddProduct() {
 
     return (
         <>
-       <form className="mt-8" onSubmit={handleOnSubmit}>
+        {isAdmin? ( 
+            <form className="mt-8" onSubmit={handleOnSubmit}>
             <h1>Product info:</h1>
                     <div className="mx-auto max-w-lg ">
                         <div className="py-1">
@@ -96,6 +109,8 @@ function AddProduct() {
                         </button>
                     </div>
                 </form>
+        ):(<div> You dont have premission to add products, Please ask an admin if you want these rights!</div>)}
+       
         </>
     )
 }

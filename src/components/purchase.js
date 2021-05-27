@@ -8,7 +8,7 @@ function Purchase({product, delivery, price, image}) {
     const customStyles = {
         content : {
           background : "lightblue",
-          height: "10vw",
+          height: "20vw",
           width:"30vw",
           margin: "3px",
           top                   : '50%',
@@ -50,6 +50,7 @@ function Purchase({product, delivery, price, image}) {
 isOpen={modalIsOpen}
 onRequestClose={closeModal}
 style={customStyles}
+ariaHideApp={false}
 contentLabel="Example Modal"
 >
 <div>Sadly we havnt implemented this yet :( ! </div>

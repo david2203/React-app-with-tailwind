@@ -5,19 +5,18 @@ import Purchase from "./purchase"
 function MyPurchases() {
 
     const [purchase, setPurchases] =useState([])
-    const userId = localStorage.getItem("userId")
-    const token = localStorage.getItem("jwt")
+   
 
     useEffect(()=>{
 
-        
+        const userId = localStorage.getItem("userId")
+        const token = localStorage.getItem("jwt")
         const fetchData = async ()=> {
                const res = await axios.get(`http://localhost:1337/purchases?user.id=${userId}`, {
                    headers: {
                        Authorization: `bearer ${token}` 
                    }
                })
-               console.log(res.data[0])
         setPurchases(res.data)
         
         }

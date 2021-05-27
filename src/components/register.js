@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import axios from "axios";
 
 
@@ -7,9 +7,6 @@ import axios from "axios";
 
 function Register() {
     
-    const [regState, setRegState] = useState(false);
-    
-    console.log(regState)
     const initialValues = {
         username:" ",
         email:" ",
@@ -29,30 +26,20 @@ function Register() {
        e.preventDefault()
 
         console.log(registerValues.username, registerValues.email)
-        const response = axios.post('http://localhost:1337/auth/local/register', {
+                axios.post('http://localhost:1337/auth/local/register', {
                 username: registerValues.username,
                 email: registerValues.email,
                 password: registerValues.password
             }).then( (e)=> { if(e.data.user)
                 history.push("/login")
-                setRegState(true) }).catch((err)=> {console.log(err)})
-
-            
-           
-            console.log(response)
+            }).catch((err)=> {console.log(err)})
 
     
     }
 
     return (
         <>
-        {regState ? (
-    <div>
-        <h1> You can now proceed to login: </h1>
-        <Link to="/login"> Login </Link>
-    </div>
-
-):( 
+         
 <div>
         <div className="container max-w-full mx-auto md:py-24 px-6">
 <div className="max-w-sm mx-auto px-6">
@@ -159,12 +146,8 @@ function Register() {
     </div>
 </div>
 </div>
-
-
     </div>
-    
-)
-}
+
 </>
 )
 

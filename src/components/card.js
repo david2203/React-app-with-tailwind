@@ -53,11 +53,10 @@ function Card({image, productName, price, description}) {
       if(modalIsOpen === true) {
       const fetchProduct = async()=>{
         const response =  await axios.get(`http://localhost:1337/products?Name=${product}`)
-        
          setProductId(response.data[0].id)
-         
       }
       fetchProduct()
+      //eslint-disable-next-line react-hooks/exhaustive-deps
     }
     },[openModal])
       
@@ -79,8 +78,8 @@ function Card({image, productName, price, description}) {
       typeOfDelivery:formValues.typeOfDelivery,
       mobile:formValues.mobile,
       user:userId,
-      
       product:productId
+
     },{
       headers: {
           Authorization: `bearer ${token}` 
@@ -119,7 +118,7 @@ function Card({image, productName, price, description}) {
         </svg>
       </div>
       <div className="flex item-center justify-between mt-3">
-        <h1 className="text-gray-700 font-bold text-xl">{price}</h1>
+        <h1 className="text-gray-700 font-bold text-xl">{price} kr</h1>
         <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openModal}>Add to Cart</button>
         
           <Modal
