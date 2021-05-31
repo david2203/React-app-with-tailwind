@@ -1,9 +1,28 @@
 import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
+import firestore from "./firebaseConfig";
+import { loadStripe } from '@stripe/stripe-js';
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe('pk_test_51Ix6LfI6AxNTr23qVTxKjrYMw9pXDMQmTkxtiPXJ22SWiaHLyUg2XMPb1MwXHhdnxSLyH1FKgh4eEFpgWMuiaBaL001k3Fxzlg');
+
+
 
 function Card({image, productName, price, description}) { 
+
+  const [firebaseData, setFirebaseData] = useState()
  
+  useEffect( ()=> {
+    const fetchData = async()=> {
+      const res = await firestore.collection("test").doc("IIA6GlZMTl3m6g32PmmU").get()
+      console.log(res.data())
+      setFirebaseData(res.data())
+
+    } 
+    fetchData()
+  },[])
+
   const initialValues = {
     typeOfDelivery:"DHL", 
     mobile:"",
@@ -161,6 +180,9 @@ function Card({image, productName, price, description}) {
                 <button className="mt-3 text-lg font-semibold
         bg-gray-800 w-full text-white rounded-lg
         px-6 py-3 block shadow-xl hover:text-white hover:bg-black" onClick={closeModal}>Back to shop</button>
+        <button role="link">
+      Buy now!
+        </button>
 
         </Modal>
         

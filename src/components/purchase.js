@@ -36,6 +36,7 @@ function Purchase({product, delivery, price, image}) {
       <p className="mt-2 text-gray-600 text-sm">Chosen delivery option: <strong>{delivery}</strong></p>
       
         <h1 className="mt-2 text-gray-600 text-sm">Price: <strong>{price}</strong></h1>
+        
         <button className="mt-3 text-lg font-semibold 
         bg-black w-full text-white rounded-lg 
         px-6 py-3 block shadow-xl hover:bg-gray-700" onClick={openModal}>Track your delivery!</button>
