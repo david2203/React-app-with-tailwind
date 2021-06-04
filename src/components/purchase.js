@@ -35,7 +35,7 @@ function Purchase({product, delivery, price, image}) {
       <h1 className="mt-2 text-gray-600 text-sm">Product: <strong>{product}</strong></h1>
       <p className="mt-2 text-gray-600 text-sm">Chosen delivery option: <strong>{delivery}</strong></p>
       
-        <h1 className="mt-2 text-gray-600 text-sm">Price: <strong>{price}</strong></h1>
+        <h1 className="mt-2 text-gray-600 text-sm">Price: <strong>{price} kr</strong></h1>
         
         <button className="mt-3 text-lg font-semibold 
         bg-black w-full text-white rounded-lg 

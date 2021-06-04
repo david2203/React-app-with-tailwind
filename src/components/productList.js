@@ -6,7 +6,7 @@ import Card from "./card";
 function ProductList() {
 
     const [products, setProducts] = useState([]);
-    const [loadPage, setLoadPage] = useState(2)
+    const [loadPage, setLoadPage] = useState(3)
     
     useEffect(()=> {
 
@@ -28,7 +28,7 @@ function ProductList() {
     }
     function showLess() {
         
-        setLoadPage(2)
+        setLoadPage(3)
         
     }
 

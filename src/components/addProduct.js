@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useHistory} from "react-router-dom";
 import axios from "axios";
 
 
@@ -6,7 +7,7 @@ import axios from "axios";
 function AddProduct() {
 
     const [isAdmin, setIsAdmin] = useState(false)
-    
+    const history =useHistory()
 
     useEffect ( ()=>{
         const userId = localStorage.getItem("userId")
@@ -58,6 +59,7 @@ function AddProduct() {
 
             axios.post("http://localhost:1337/upload",formData)
             .then( (response) => {console.log(response.data)})
+            history.push("/products")
             .catch( (err)=>{console.log(err)})
         }).catch ( (err)=> {
             console.log(err)

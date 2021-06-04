@@ -1,31 +1,66 @@
 import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
-import firestore from "./firebaseConfig";
+import dotenv from 'dotenv';
+import firestore from "../firebaseConfig";
 import { loadStripe } from '@stripe/stripe-js';
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
-const stripePromise = loadStripe('pk_test_51Ix6LfI6AxNTr23qVTxKjrYMw9pXDMQmTkxtiPXJ22SWiaHLyUg2XMPb1MwXHhdnxSLyH1FKgh4eEFpgWMuiaBaL001k3Fxzlg');
+
+dotenv.config();
+const stripePromise = loadStripe(process.env.REACT_APP_PK);
 
 
 
 function Card({image, productName, price, description}) { 
 
+  const handleClick = async (event) => {
+    // Get Stripe.js instance
+    const stripe = await stripePromise;
+    const [quantity, setQuantity] = useState(1)
+    // Call your backend to create the Checkout Session
+    const response = await axios.post("http://localhost:4242/create-checkout-session", {name:productName, price:price, quantity:quantity})
+    //('/create-checkout-session', { method: 'POST' });
+
+    console.log(response)
+
+    const sessionId = response.data.id
+
+    console.log(sessionId)
+    // When the customer clicks on the button, redirect them to Checkout.
+    const result = await stripe.redirectToCheckout({
+      sessionId: sessionId,
+    });
+
+    if (result.error) {
+      // If `redirectToCheckout` fails due to a browser or network
+      // error, display the localized error message to your customer
+      // using `result.error.message`.
+    }
+  };
+
+  const [isAdmin, setIsAdmin] = useState(false)
   const [firebaseData, setFirebaseData] = useState()
  
   useEffect( ()=> {
     const fetchData = async()=> {
       const res = await firestore.collection("test").doc("IIA6GlZMTl3m6g32PmmU").get()
-      console.log(res.data())
       setFirebaseData(res.data())
-
     } 
     fetchData()
+    const userId = localStorage.getItem("userId")
+        const fetchRole = async()=>{
+        const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
+        setIsAdmin(response.data[0].isAdmin)
+      }
+    fetchRole()
+    
   },[])
 
   const initialValues = {
     typeOfDelivery:"DHL", 
     mobile:"",
+    quantity:""
   }
 
   const [userId, setUserId] = useState(null)
@@ -44,6 +79,10 @@ function Card({image, productName, price, description}) {
   const email = localStorage.getItem("userEmail")
 
   const [modalIsOpen,setIsOpen] = useState(false);
+  const [deleteIsOpen,setDeleteIsOpen] = useState(false);
+  const [editIsOpen,setEditIsOpen] = useState(false);
+
+
   
  
   const customStyles = {
@@ -65,11 +104,23 @@ function Card({image, productName, price, description}) {
     function openModal(e) {
         setProduct(e.target.parentNode.previousSibling.previousSibling.previousSibling.innerHTML)
       setIsOpen(true);
-
-        
+    }
+    function openDeleteModal(e) {
+      setProduct(e.target.parentNode.previousSibling.previousSibling.previousSibling.innerHTML)
+      setDeleteIsOpen(true)
+    }
+    function openEditModal(e) {
+      setProduct(e.target.parentNode.previousSibling.previousSibling.previousSibling.innerHTML)
+      setEditIsOpen(true)
+    }
+    function closeDeleteModal(){
+      setDeleteIsOpen(false);
+    }
+    function closeEditModal(){
+      setEditIsOpen(false);
     }
     useEffect (()=> {
-      if(modalIsOpen === true) {
+      if(modalIsOpen === true || deleteIsOpen === true || editIsOpen === true) {
       const fetchProduct = async()=>{
         const response =  await axios.get(`http://localhost:1337/products?Name=${product}`)
          setProductId(response.data[0].id)
@@ -85,6 +136,18 @@ function Card({image, productName, price, description}) {
   function handleOnChange(e) {
     setFormValues({...formValues,[e.target.name]: e.target.value})
     
+  }
+  function deleteProduct(){
+    const deleteChosen = async()=>  {
+      const response = await axios.delete(`http://localhost:1337/products/${productId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      console.log(response)
+    }
+    deleteChosen()
   }
 
   function handleOnSubmit(e) {
@@ -138,8 +201,31 @@ function Card({image, productName, price, description}) {
       </div>
       <div className="flex item-center justify-between mt-3">
         <h1 className="text-gray-700 font-bold text-xl">{price} kr</h1>
-        <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openModal}>Add to Cart</button>
-        
+        <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openModal}>Buy! </button>
+
+        {isAdmin ? (<><button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openDeleteModal}>Delete!</button>
+                      <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openEditModal}>Edit!</button>
+                   </> ):(<div></div>) }
+        <Modal
+          isOpen={deleteIsOpen}
+          onRequestClose={closeDeleteModal}
+          style={customStyles}
+          ariaHideApp={false}
+          contentLabel="Example Modal"
+        >
+          <div>Do you really want to delete this product? </div>
+          <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={deleteProduct}>Yes</button>
+          <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={closeDeleteModal}>No</button>
+        </Modal>
+
+        <Modal
+          isOpen={editIsOpen}
+          onRequestClose={closeEditModal}
+          style={customStyles}
+          ariaHideApp={false}
+          contentLabel="Example Modal"
+        > <div>Edit to be done!</div></Modal>
+
           <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
@@ -168,6 +254,12 @@ function Card({image, productName, price, description}) {
             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none" /><br/>
                             
                         </div>
+                        <div className="py-1">
+                            <span className="px-1 text-sm text-gray-600">Quantity:</span>
+                            <input type="number" name="quantity" value={formValues.quantity} onChange={handleOnChange} className="text-md block px-3 py-2 rounded-lg w-full
+            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none" /><br/>
+                            
+                        </div>
                         
 
                         
@@ -180,7 +272,8 @@ function Card({image, productName, price, description}) {
                 <button className="mt-3 text-lg font-semibold
         bg-gray-800 w-full text-white rounded-lg
         px-6 py-3 block shadow-xl hover:text-white hover:bg-black" onClick={closeModal}>Back to shop</button>
-        <button role="link">
+
+        <button role="link" onClick={handleClick}>
       Buy now!
         </button>
 
