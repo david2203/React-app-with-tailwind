@@ -80,6 +80,7 @@ function Card({image, productName, price, description}) {
   
     function openModal(e) {
         setProduct(e.target.parentNode.previousSibling.previousSibling.previousSibling.innerHTML)
+        console.log(e.target.parentNode.previousSibling.previousSibling.previousSibling.innerHTML)
       setIsOpen(true);
     }
     function openDeleteModal(e) {
