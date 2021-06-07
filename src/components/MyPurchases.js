@@ -18,6 +18,7 @@ function MyPurchases() {
                    }
                })
         setPurchases(res.data)
+        console.log(res.data)
         
         }
 
@@ -33,7 +34,7 @@ function MyPurchases() {
             
             {purchase.map( (purchase)=>{
                 return(
-                <Purchase key={purchase.id} product={purchase.product.Name} delivery={purchase.typeOfDelivery} price={purchase.product.Price} image={purchase.product.Img.formats.thumbnail.url} />
+                <Purchase key={purchase.id} product={purchase.product.Name} delivery={purchase.typeOfDelivery} price={purchase.product.Price} image={purchase.product.Img.formats.thumbnail.url} quantity={purchase.quantity} />
                 )
             })}
 

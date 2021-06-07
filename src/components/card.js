@@ -13,31 +13,8 @@ const stripePromise = loadStripe(process.env.REACT_APP_PK);
 
 
 function Card({image, productName, price, description}) { 
-
-  const handleClick = async (event) => {
-    // Get Stripe.js instance
-    const stripe = await stripePromise;
-    const [quantity, setQuantity] = useState(1)
-    // Call your backend to create the Checkout Session
-    const response = await axios.post("http://localhost:4242/create-checkout-session", {name:productName, price:price, quantity:quantity})
-    //('/create-checkout-session', { method: 'POST' });
-
-    console.log(response)
-
-    const sessionId = response.data.id
-
-    console.log(sessionId)
-    // When the customer clicks on the button, redirect them to Checkout.
-    const result = await stripe.redirectToCheckout({
-      sessionId: sessionId,
-    });
-
-    if (result.error) {
-      // If `redirectToCheckout` fails due to a browser or network
-      // error, display the localized error message to your customer
-      // using `result.error.message`.
-    }
-  };
+  const [quantity, setQuantity] = useState(1)
+  
 
   const [isAdmin, setIsAdmin] = useState(false)
   const [firebaseData, setFirebaseData] = useState()
@@ -160,7 +137,8 @@ function Card({image, productName, price, description}) {
       typeOfDelivery:formValues.typeOfDelivery,
       mobile:formValues.mobile,
       user:userId,
-      product:productId
+      product:productId,
+      quantity:formValues.quantity
 
     },{
       headers: {
@@ -265,17 +243,13 @@ function Card({image, productName, price, description}) {
                         
                         <button className="mt-3 text-lg font-semibold
         bg-gray-800 w-full text-white rounded-lg
-        px-6 py-3 block shadow-xl hover:text-white hover:bg-black" type="submit">Order!</button>
+        px-6 py-3 block shadow-xl hover:text-white hover:bg-black" type="submit">Add to Cart</button>
                     </div>
                 </form>
 
                 <button className="mt-3 text-lg font-semibold
         bg-gray-800 w-full text-white rounded-lg
         px-6 py-3 block shadow-xl hover:text-white hover:bg-black" onClick={closeModal}>Back to shop</button>
-
-        <button role="link" onClick={handleClick}>
-      Buy now!
-        </button>
 
         </Modal>
         
