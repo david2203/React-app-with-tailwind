@@ -12,6 +12,7 @@ import ForgotPassword from "./forgotPassword";
 import Payment from "./payment";
 import AddExpert from "./addExpert";
 import MyPurchases from "./MyPurchases"
+import AdminPanel  from "./adminPanel"
 
 
 
@@ -28,8 +29,9 @@ export default function AppRoute() {
 
             
             <Route path="/products" exact component={Products} />
+            <Route path="/" exact component={Products} />
+            <Route path="/adminPanel" exact component={AdminPanel} />
             <Route path="/payment" exact component={Payment} />
-            <Route path="/" exact component={Products}/>
             <Route path="/cart" exact component={Cart} />
             <Route path="/login" exact component={Login} />
             <Route path="/register" exact component={Register} />

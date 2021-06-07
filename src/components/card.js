@@ -149,6 +149,37 @@ function Card({image, productName, price, description}) {
   )
   }
 
+  const editedValues = {
+    Name:"",
+    Description:"",
+    Price:0
+}
+const [editProductValues, setEditProductValues] = useState(editedValues)
+    function handleOnChangeEdit(e) {
+      setEditProductValues({...editProductValues,[e.target.name]:e.target.value})
+    }
+
+    function handleOnEdit(e) {
+      e.preventDefault()
+       
+      const editChosen = async()=>{
+
+        axios.put(`http://localhost:1337/products/${productId}`, {
+          Name:editProductValues.name,
+          Description:editProductValues.description,
+          Price:editProductValues.price
+      },{
+        headers: {
+            Authorization: `bearer ${token}` 
+        }
+    }).then(
+      closeEditModal(),
+      window.location.reload()
+    )
+      }
+      editChosen()
+    }
+
     return (
         
         <>
@@ -202,7 +233,39 @@ function Card({image, productName, price, description}) {
           style={customStyles}
           ariaHideApp={false}
           contentLabel="Example Modal"
-        > <div>Edit to be done!</div></Modal>
+        > 
+        <form className="mt-8" onSubmit={handleOnEdit}>
+            <h1>Product info:</h1>
+                    <div className="mx-auto max-w-lg ">
+                        <div className="py-1">
+                            <span className="px-1 text-sm text-gray-600">Product name:</span>
+                            <input placeholder="" type="text" name="name" value={editProductValues.name} onChange={handleOnChangeEdit}
+                                   className="text-md block px-3 py-2 rounded-lg w-full
+            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
+                        </div>
+                        <div className="py-1">
+                            <span className="px-1 text-sm text-gray-600">Description:</span>
+                            <input placeholder="" name="description" value={editProductValues.description} onChange={handleOnChangeEdit}
+                                   className="text-md block px-3 py-2 rounded-lg w-full
+            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
+                        </div>
+                        <div className="py-1">
+                            <span className="px-1 text-sm text-gray-600">Price:</span>
+                            <input placeholder=""  name="price" type="number" value={editProductValues.price} onChange={handleOnChangeEdit}
+                                   className="text-md block px-3 py-2 rounded-lg w-full
+            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
+                        </div>
+                        <button className="mt-3 text-lg font-semibold
+        bg-gray-800 w-full text-white rounded-lg
+        px-6 py-3 block shadow-xl hover:text-white hover:bg-black">
+                            Edit!
+                        </button>
+                    </div>
+                </form>
+
+            <button className="mt-3 text-lg font-semibold
+    bg-gray-800 w-full text-white rounded-lg
+    px-6 py-3 block shadow-xl hover:text-white hover:bg-black" onClick={closeEditModal}>Cancel edit</button></Modal>
 
           <Modal
           isOpen={modalIsOpen}

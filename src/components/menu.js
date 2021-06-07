@@ -1,10 +1,23 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from "react-router-dom";
 import logo from "./images/logo.png";
+import axios from "axios"
 
 
 function Menu() {
 
+
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    useEffect ( ()=>{
+        const userId = localStorage.getItem("userId")
+        const fetchRole = async()=>{
+        const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
+        setIsAdmin(response.data[0].isAdmin)
+    }
+    fetchRole()
+
+    },[])
 
     const [jwt, setJWT] = useState("")
 
@@ -35,6 +48,7 @@ function Menu() {
 <Link to="/addProduct" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add product</Link>
 
 {/* <Link to="/addExpert" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add expert</Link> */}
+{isAdmin?(<Link to="/adminPanel" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admin panel</Link>):(<div></div>)}
 
 <Link to="/purchases" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cart</Link>
 
