@@ -2,17 +2,15 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import Purchase from "./purchase"
 
-function MyPurchases() {
 
+function AllPurchases() {
     const [purchase, setPurchases] =useState([])
    
 
     useEffect(()=>{
-
-        const userId = localStorage.getItem("userId")
         const token = localStorage.getItem("jwt")
         const fetchData = async ()=> {    
-               const res = await axios.get(`http://localhost:1337/purchases?user.id=${userId}`, {
+               const res = await axios.get(`http://localhost:1337/purchases`, {
                    headers: {
                        Authorization: `bearer ${token}` 
                    }
@@ -28,7 +26,7 @@ function MyPurchases() {
     return (
         <>
 
-        <h1><strong>My Purchases</strong></h1>
+        <h1><strong>All Purchases</strong></h1>
         <div className="flex items-center justify-center flex-wrap mx-auto">
             
             {purchase.map( (purchase)=>{
@@ -42,4 +40,4 @@ function MyPurchases() {
     )
 }
 
-export default MyPurchases
+export default AllPurchases

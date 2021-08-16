@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import Modal from "react-modal"
+import React from 'react'
+// import Modal from "react-modal"
 import axios from "axios"
 import dotenv from 'dotenv';
 import { loadStripe } from '@stripe/stripe-js';
@@ -11,7 +11,7 @@ import { loadStripe } from '@stripe/stripe-js';
 function Purchase({product, delivery, price, image, quantity}) {
 
     
-    const [modalIsOpen,setIsOpen] = useState(false);
+    // const [modalIsOpen,setIsOpen] = useState(false);
 
     const handleClick = async (event) => {
       // Get Stripe.js instance
@@ -29,7 +29,7 @@ function Purchase({product, delivery, price, image, quantity}) {
       console.log(sessionId)
       // When the customer clicks on the button, redirect them to Checkout.
       const result = await stripe.redirectToCheckout({
-        sessionId: sessionId,
+        sessionId: sessionId, 
       });
   
       if (result.error) {
@@ -39,26 +39,26 @@ function Purchase({product, delivery, price, image, quantity}) {
       }
     };
 
-    const customStyles = {
-        content : {
-          background : "lightblue",
-          height: "20vw",
-          width:"30vw",
-          margin: "3px",
-          top                   : '50%',
-          left                  : '50%',
-          right                 : 'auto',
-          bottom                : 'auto',
-          marginRight           : '-50%',
-          transform             : 'translate(-50%, -50%)'
-        }
-      };
-    function openModal(e) {
-      setIsOpen(true);   
-    }
-    function closeModal(){
-        setIsOpen(false);
-      }
+    // const customStyles = {
+    //     content : {
+    //       background : "lightblue",
+    //       height: "20vw",
+    //       width:"30vw",
+    //       margin: "3px",
+    //       top                   : '50%',
+    //       left                  : '50%',
+    //       right                 : 'auto',
+    //       bottom                : 'auto',
+    //       marginRight           : '-50%',
+    //       transform             : 'translate(-50%, -50%)'
+    //     }
+    //   };
+    // function openModal(e) {
+    //   setIsOpen(true);   
+    // }
+    // function closeModal(){
+    //     setIsOpen(false);
+    //   }
     return (
         <>
             <div className="py-6 mx-6" >
@@ -84,7 +84,7 @@ function Purchase({product, delivery, price, image, quantity}) {
         </div>
         </div>
 
-<Modal
+{/* <Modal
 isOpen={modalIsOpen}
 onRequestClose={closeModal}
 style={customStyles}
@@ -95,7 +95,7 @@ contentLabel="Example Modal"
 <button className="mt-3 text-lg font-semibold 
         bg-black w-full text-white rounded-lg 
         px-1 py-3 block shadow-xs hover:bg-gray-700" onClick={closeModal}> Back</button>
-</Modal>
+</Modal> */}
 
 
         

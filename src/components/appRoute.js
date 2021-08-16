@@ -11,8 +11,11 @@ import Loggout from "./loggout";
 import ForgotPassword from "./forgotPassword";
 import Payment from "./payment";
 import AddExpert from "./addExpert";
-import MyPurchases from "./MyPurchases"
-import AdminPanel  from "./adminPanel"
+import MyPurchases from "./MyPurchases";
+import AdminPanel  from "./adminPanel";
+import Profile from "./profile";
+import Users from "./users";
+import AllPurchases from "./allPurchases";
 
 
 
@@ -41,7 +44,9 @@ export default function AppRoute() {
             <Route path="/forgotpassword" exact component={ForgotPassword}/>
             <Route path="/addExpert" exact component={AddExpert}/>
             <Route path="/purchases" exact component={MyPurchases}/>
-
+            <Route path="/profile" exact component={Profile}/>
+            <Route path="/users" exact component={Users} />
+            <Route path="/allPurchases" exact component={AllPurchases} />
 
         
             </Router>

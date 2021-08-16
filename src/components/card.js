@@ -2,42 +2,46 @@ import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import dotenv from 'dotenv';
-import firestore from "../firebaseConfig";
-import { loadStripe } from '@stripe/stripe-js';
+// import firestore from "../firebaseConfig";
+// import { loadStripe } from '@stripe/stripe-js';
+
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 
 dotenv.config();
-const stripePromise = loadStripe(process.env.REACT_APP_PK);
+// const stripePromise = loadStripe(process.env.REACT_APP_PK);
 
 
 
 function Card({image, productName, price, description}) { 
-  const [quantity, setQuantity] = useState(1)
+  // const [quantity, setQuantity] = useState(1)
   
 
   const [isAdmin, setIsAdmin] = useState(false)
-  const [firebaseData, setFirebaseData] = useState()
+  // const [firebaseData, setFirebaseData] = useState()
  
   useEffect( ()=> {
-    const fetchData = async()=> {
-      const res = await firestore.collection("test").doc("IIA6GlZMTl3m6g32PmmU").get()
-      setFirebaseData(res.data())
-    } 
-    fetchData()
+    // const fetchData = async()=> {
+    //   const res = await firestore.collection("test").doc("IIA6GlZMTl3m6g32PmmU").get()
+    //   setFirebaseData(res.data())
+    // } 
+    // fetchData()
+    
     const userId = localStorage.getItem("userId")
+    if(userId !== undefined) {
         const fetchRole = async()=>{
         const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
         setIsAdmin(response.data[0].isAdmin)
       }
     fetchRole()
+    }
     
   },[])
 
   const initialValues = {
     typeOfDelivery:"DHL", 
     mobile:"",
-    quantity:""
+    quantity:"1"
   }
 
   const [userId, setUserId] = useState(null)
@@ -117,13 +121,13 @@ function Card({image, productName, price, description}) {
   }
   function deleteProduct(){
     const deleteChosen = async()=>  {
-      const response = await axios.delete(`http://localhost:1337/products/${productId}`,
+      await axios.delete(`http://localhost:1337/products/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      console.log(response)
+      
     }
     deleteChosen()
   }
@@ -298,7 +302,7 @@ const [editProductValues, setEditProductValues] = useState(editedValues)
                         </div>
                         <div className="py-1">
                             <span className="px-1 text-sm text-gray-600">Quantity:</span>
-                            <input type="number" name="quantity" value={formValues.quantity} onChange={handleOnChange} className="text-md block px-3 py-2 rounded-lg w-full
+                            <input placeholder="1" type="number" min="1" name="quantity" value={formValues.quantity} onChange={handleOnChange} className="text-md block px-3 py-2 rounded-lg w-full
             bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none" /><br/>
                             
                         </div>

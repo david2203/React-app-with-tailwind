@@ -11,11 +11,14 @@ function Menu() {
 
     useEffect ( ()=>{
         const userId = localStorage.getItem("userId")
+        if(userId !== null) {
         const fetchRole = async()=>{
         const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
         setIsAdmin(response.data[0].isAdmin)
+        
     }
     fetchRole()
+        }
 
     },[])
 
@@ -50,7 +53,7 @@ function Menu() {
 {/* <Link to="/addExpert" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add expert</Link> */}
 {isAdmin?(<Link to="/adminPanel" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admin panel</Link>):(<div></div>)}
 
-<Link to="/purchases" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Cart</Link>
+<Link to="/profile" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</Link>
 
 <Link to="/loggout" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Loggout</Link>
 
