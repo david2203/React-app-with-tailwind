@@ -13,7 +13,7 @@ function ProductList() {
         // jwt gör att bara "legit" användare kan komma in
  
         const fetchProduct = async()=>{
-           const response =  await axios.get(`http://localhost:1337/products?_limit=${loadPage}`)
+           const response =  await axios.get(`http://git.heroku.com/davidstrapi.git/products?_limit=${loadPage}`)
            
           setProducts(response.data)
 
@@ -34,6 +34,8 @@ function ProductList() {
 
     return (
         <>
+
+     
         <div className="flex items-center justify-center flex-wrap mx-auto">
             
             {products.map((product)=>{ 

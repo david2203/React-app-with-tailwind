@@ -28,7 +28,7 @@ function Card({image, productName, price, description}) {
     // fetchData()
     
     const userId = localStorage.getItem("userId")
-    if(userId !== undefined) {
+    if(userId !== undefined && userId !== null) {
         const fetchRole = async()=>{
         const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
         setIsAdmin(response.data[0].isAdmin)
@@ -51,6 +51,7 @@ function Card({image, productName, price, description}) {
     
   },[])
 
+  
   const [product, setProduct] = useState()
   const [productId, setProductId] = useState()
 
@@ -215,8 +216,8 @@ const [editProductValues, setEditProductValues] = useState(editedValues)
       </div>
       <div className="flex item-center justify-between mt-3">
         <h1 className="text-gray-700 font-bold text-xl">{price} kr</h1>
-        <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openModal}>Buy! </button>
-
+        {token?(<button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openModal}>Buy! </button>): (<div>Login to buy!</div>)}
+        
         {isAdmin ? (<><button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openDeleteModal}>Delete!</button>
                       <button className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded" onClick={openEditModal}>Edit!</button>
                    </> ):(<div></div>) }

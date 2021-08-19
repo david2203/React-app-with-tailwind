@@ -58,25 +58,25 @@ function Register() {
                             <span className="px-1 text-sm text-gray-600">Username</span>
                             <input placeholder="" type="text" name="username" values={registerValues.username} onChange={handleOnChange}
                                    className="text-md block px-3 py-2 rounded-lg w-full
-            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
+                                            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
                         </div>
                         <div className="py-1">
                             <span className="px-1 text-sm text-gray-600">Email</span>
                             <input placeholder="" type="email" name="email" values={registerValues.email} onChange={handleOnChange}
                                    className="text-md block px-3 py-2 rounded-lg w-full
-            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
+                                            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
                         </div>
                         <div className="py-1">
                             <span className="px-1 text-sm text-gray-600">Password</span>
                             <input placeholder="" type="password" x-model="password" name="password" values={registerValues.password} onChange={handleOnChange}
                                    className="text-md block px-3 py-2 rounded-lg w-full
-            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
+                                            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
                         </div>
                         <div className="py-1">
                             <span className="px-1 text-sm text-gray-600">Password Confirm</span>
                             <input placeholder="" type="password" x-model="password_confirm"
                                    className="text-md block px-3 py-2 rounded-lg w-full
-            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
+                                            bg-white border-2 border-gray-300 placeholder-gray-600 shadow-md focus:placeholder-gray-500 focus:bg-white focus:border-gray-600 focus:outline-none"/>
                         </div>
                         <div className="flex justify-start mt-3 ml-4 p-1">
                             <ul>

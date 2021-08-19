@@ -39,8 +39,7 @@ function Menu() {
 </div>
 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
 <div className="flex-shrink-0 flex items-center">
-<img className="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow"/>
-<img className="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow"/>
+<img className="hidden lg:block h-20 w-auto" src={logo} width="100" height="100" alt="Workflow"/>
 </div>
 <div className="hidden sm:block sm:ml-6">
 
@@ -48,10 +47,14 @@ function Menu() {
 <div className="flex space-x-4">
 <Link to="/products" className="bg-gray-900 text-white px-3 py-2 rounded-md text-sm font-medium" aria-current="page">Products</Link>
 
-<Link to="/addProduct" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add product</Link>
-
 {/* <Link to="/addExpert" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add expert</Link> */}
-{isAdmin?(<Link to="/adminPanel" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admin panel</Link>):(<div></div>)}
+
+{isAdmin?(
+<>
+    <Link to="/addProduct" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Add product</Link>
+    <Link to="/adminPanel" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Admin panel</Link> 
+</>
+):(<div></div>)}
 
 <Link to="/profile" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Profile</Link>
 

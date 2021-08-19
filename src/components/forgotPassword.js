@@ -1,28 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios';
 
 function ForgotPassword() {
 
-    function resetRequest() {
-        axios
-    .post('http://localhost:1337/auth/forgot-password', {
-      email: 'david.saupe@gmail.com', // user's email
-    })
-    .then(response => {
-      console.log('Your user received an email', response);
-    })
-    .catch(error => {
-      console.log('An error occurred:', error.response);
-    });
-    }
-    
+  function resetRequest() {
+    axios
+      .post('http://localhost:1337/auth/forgot-password', {
+        email: formValues.email, // user's email
+      })
+      .then(response => {
+        console.log('Your user received an email', response);
+      })
+      .catch(error => {
+        console.log('An error occurred:', error.response);
+      });
+  }
 
-    return (
-        <>
-         Återställ lösenord
-         <button onClick={resetRequest}>Återställ</button>   
-        </>
-    )
+  const initialValues = {
+    email: ""
+  }
+  const [formValues, setFormValues] = useState(initialValues)
+
+  function handleOnChange(e) {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+    console.log(formValues)
+  }
+
+
+  return (
+    <>
+        <div>
+          <input type="email" name="email" value={formValues.email} onChange={handleOnChange} placeholder="Email" className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0" />
+        </div>
+
+      <button onClick={resetRequest} className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">Återställ</button>
+
+    </>
+  )
 }
 
 export default ForgotPassword
