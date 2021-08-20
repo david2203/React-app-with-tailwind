@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import {Link} from "react-router-dom";
 import axios from "axios";
+import server from "./config"
 import Modal from "react-modal";
 
 
@@ -21,7 +22,7 @@ function Profile() {
         const userId = localStorage.getItem("userId")
     if(userId !== null) {
         const fetchRole = async()=>{
-        const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
+        const response = await axios.get(`${server}users?id=${userId}`)
         setUsername(response.data[0].username)
         setEmail(response.data[0].email)
 
@@ -35,7 +36,7 @@ function Profile() {
 
   function handleDelete() {
     const deleteChosen = async()=>  {
-        await axios.delete(`http://localhost:1337/users/${userId}`,
+        await axios.delete(`${server}users/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -91,7 +92,7 @@ function Profile() {
        
       const editChosen = async()=>{
 
-        axios.put(`http://localhost:1337/users/${userId}`, {
+        axios.put(`${server}users/${userId}`, {
           username:editUsername.username
       },{
         headers: {
@@ -126,7 +127,7 @@ function Profile() {
        
       const editChosen = async()=>{
 
-        axios.put(`http://localhost:1337/users/${userId}`, {
+        axios.put(`${server}users/${userId}`, {
           email:editEmail.email
       },{
         headers: {

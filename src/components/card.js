@@ -2,7 +2,8 @@ import React, {useState, useEffect} from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import dotenv from 'dotenv';
-// import firestore from "../firebaseConfig";
+import firestore from "../firebaseConfig";
+import server from "./config"
 // import { loadStripe } from '@stripe/stripe-js';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -18,19 +19,20 @@ function Card({image, productName, price, description}) {
   
 
   const [isAdmin, setIsAdmin] = useState(false)
-  // const [firebaseData, setFirebaseData] = useState()
+  const [firebaseData, setFirebaseData] = useState()
  
   useEffect( ()=> {
-    // const fetchData = async()=> {
-    //   const res = await firestore.collection("test").doc("IIA6GlZMTl3m6g32PmmU").get()
-    //   setFirebaseData(res.data())
-    // } 
-    // fetchData()
+    const fetchData = async()=> {
+      const res = await firestore.collection("test").doc("IIA6GlZMTl3m6g32PmmU").get()
+      setFirebaseData(res.data().name)
+      console.log(res.data().name)
+    } 
+    fetchData()
     
     const userId = localStorage.getItem("userId")
     if(userId !== undefined && userId !== null) {
         const fetchRole = async()=>{
-        const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
+        const response = await axios.get(`${server}users?id=${userId}`)
         setIsAdmin(response.data[0].isAdmin)
       }
     fetchRole()
@@ -105,7 +107,7 @@ function Card({image, productName, price, description}) {
     useEffect (()=> {
       if(modalIsOpen === true || deleteIsOpen === true || editIsOpen === true) {
       const fetchProduct = async()=>{
-        const response =  await axios.get(`http://localhost:1337/products?Name=${product}`)
+        const response =  await axios.get(`${server}products?Name=${product}`)
          setProductId(response.data[0].id)
       }
       fetchProduct()
@@ -122,7 +124,7 @@ function Card({image, productName, price, description}) {
   }
   function deleteProduct(){
     const deleteChosen = async()=>  {
-      await axios.delete(`http://localhost:1337/products/${productId}`,
+      await axios.delete(`${server}products/${productId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -138,7 +140,7 @@ function Card({image, productName, price, description}) {
 
     
     console.log(productId)
-    axios.post("http://localhost:1337/purchases",{
+    axios.post(`${server}purchases`,{
       email:email,
       typeOfDelivery:formValues.typeOfDelivery,
       mobile:formValues.mobile,
@@ -170,7 +172,7 @@ const [editProductValues, setEditProductValues] = useState(editedValues)
        
       const editChosen = async()=>{
 
-        axios.put(`http://localhost:1337/products/${productId}`, {
+        axios.put(`${server}products/${productId}`, {
           Name:editProductValues.name,
           Description:editProductValues.description,
           Price:editProductValues.price
@@ -321,6 +323,7 @@ const [editProductValues, setEditProductValues] = useState(editedValues)
         px-6 py-3 block shadow-xl hover:text-white hover:bg-black" onClick={closeModal}>Back to shop</button>
 
         </Modal>
+        {/* {firebaseData} */}
         
         
       </div>

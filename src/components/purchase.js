@@ -3,6 +3,8 @@ import React from 'react'
 import axios from "axios"
 import dotenv from 'dotenv';
 import { loadStripe } from '@stripe/stripe-js';
+import {server2} from "./config"
+import {stripeserver} from "./config"
 
 
     dotenv.config();
@@ -19,7 +21,7 @@ function Purchase({product, delivery, price, image, quantity}) {
       const stripe = await stripePromise;
       
       // Call your backend to create the Checkout Session
-      const response = await axios.post("http://localhost:4242/create-checkout-session", {name:product, price:price, quantity:quantity})
+      const response = await axios.post(`${stripeserver}create-checkout-session`, {name:product, price:price, quantity:quantity})
       //('/create-checkout-session', { method: 'POST' });
   
       console.log(response)
@@ -63,7 +65,7 @@ function Purchase({product, delivery, price, image, quantity}) {
         <>
             <div className="py-6 mx-6" >
   <div className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
-      <div className="w-1/3 bg-cover" > <img src={`http://localhost:1337${image}`} alt=""/>
+      <div className="w-1/3 bg-cover" > <img src={`${server2}${image}`} alt=""/>
     </div> 
     <div className="w-2/3 p-4">
       <h1 className="mt-2 text-gray-600 text-sm">Product: <strong>{product}</strong></h1>

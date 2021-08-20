@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import Purchase from "./purchase"
+import server from "./config"
 
 
 function AllPurchases() {
@@ -10,7 +11,7 @@ function AllPurchases() {
     useEffect(()=>{
         const token = localStorage.getItem("jwt")
         const fetchData = async ()=> {    
-               const res = await axios.get(`http://localhost:1337/purchases`, {
+               const res = await axios.get(`${server}purchases`, {
                    headers: {
                        Authorization: `bearer ${token}` 
                    }

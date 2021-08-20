@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {Link} from "react-router-dom";
 import logo from "./images/logo.png";
 import axios from "axios"
+import server from "./config"
 
 
 function Menu() {
@@ -13,7 +14,7 @@ function Menu() {
         const userId = localStorage.getItem("userId")
         if(userId !== null) {
         const fetchRole = async()=>{
-        const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
+        const response = await axios.get(`${server}users?id=${userId}`)
         setIsAdmin(response.data[0].isAdmin)
         
     }

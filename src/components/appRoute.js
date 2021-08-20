@@ -17,6 +17,7 @@ import AdminPanel  from "./adminPanel";
 import Profile from "./profile";
 import Users from "./users";
 import AllPurchases from "./allPurchases";
+import GoogleAuthCallback from './GoogleAuthCallback'
 
 
 
@@ -33,6 +34,9 @@ export default function AppRoute() {
                 
                 <Switch>
                     
+                    <Route path="/auth/callback/google">
+                        <GoogleAuthCallback />
+                    </Route>
                     <Route path="/products" exact component={Products} />
                     <Route path="/" exact component={Products} />
                     <Route path="/adminPanel" exact component={AdminPanel} />

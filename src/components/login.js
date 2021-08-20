@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
+import server from "./config"
 
 
 export default function Login() {
@@ -23,7 +24,7 @@ export default function Login() {
         e.preventDefault();
 
         axios
-        .post('http://localhost:1337/auth/local', {
+        .post(`${server}auth/local`, {
           identifier: formValues.email,
           password: formValues.password,
         })
@@ -76,6 +77,14 @@ export default function Login() {
                                 <div className="mt-7">
                                     <button className="bg-blue-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
                                         Login
+                                    </button>
+
+                                    <button
+                                        onClick={() =>
+                                        (window.location = `${server}connect/google`)
+                                        }
+                                    >
+                                        Login via Google
                                     </button>
                                 </div>
                                 <div className="mt-7">

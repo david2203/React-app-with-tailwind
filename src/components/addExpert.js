@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import axios from "axios"
+import server from "./config"
 
 
 function AddExpert() {
@@ -26,7 +27,7 @@ function AddExpert() {
         e.preventDefault()
         console.log(addExpertValues)
 
-        axios.post("http://localhost:1337/experts", {
+        axios.post(`${server}experts`, {
             Name:addExpertValues.name,
             Description:addExpertValues.description,
             Price:addExpertValues.price
@@ -42,7 +43,7 @@ function AddExpert() {
             formData.append("field", "img")
 
 
-            axios.post("http://localhost:1337/upload",formData)
+            axios.post(`${server}upload`,formData)
             .then( (response) => {console.log(response.data)})
             .catch( (err)=>{console.log(err)})
         }).catch ( (err)=> {

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
 import UserCard from "./userCard"
+import server from "./config"
 
 function Users() {
 
@@ -12,7 +13,7 @@ function Users() {
         
         const token = localStorage.getItem("jwt")
         const fetchData = async ()=> {    
-               const res = await axios.get(`http://localhost:1337/users`, {
+               const res = await axios.get(`${server}users`, {
                    headers: {
                        Authorization: `bearer ${token}` 
                    }

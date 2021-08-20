@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from "react-router-dom";
 import axios from "axios";
+import server from "./config"
 
 
 
@@ -8,11 +9,11 @@ function AddProduct() {
 
     const [isAdmin, setIsAdmin] = useState(false)
     const history =useHistory()
-
+    
     useEffect ( ()=>{
         const userId = localStorage.getItem("userId")
         const fetchRole = async()=>{
-        const response = await axios.get(`http://localhost:1337/users?id=${userId}`)
+        const response = await axios.get(`${server}users?id=${userId}`)
         setIsAdmin(response.data[0].isAdmin)
     }
     fetchRole()
@@ -41,7 +42,7 @@ function AddProduct() {
         e.preventDefault()
        
 
-        axios.post("http://localhost:1337/products", {
+        axios.post(`${server}products`, {
             Name:addProductValues.name,
             Description:addProductValues.description,
             Price:addProductValues.price
@@ -57,7 +58,7 @@ function AddProduct() {
             formData.append("field", "Img")
 
 
-            axios.post("http://localhost:1337/upload",formData)
+            axios.post(`${server}upload`,formData)
             .then( (response) => {console.log(response.data)})
             history.push("/products")
             .catch( (err)=>{console.log(err)})

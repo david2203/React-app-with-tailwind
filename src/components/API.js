@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, {useEffect, useState} from 'react'
 import fire from "./images/fire.jpg";
+import server from "./config"
 
 function API() {
 
@@ -9,7 +10,7 @@ function API() {
     useEffect(()=> {
         
         const fetchData = async()=> {
-            const response = await axios.get("https://localhost:1337/bookings?user_premission_user.id=14")
+            const response = await axios.get(`${server}bookings?user_premission_user.id=14`)
             const res = response.data
             setData(res)
         }

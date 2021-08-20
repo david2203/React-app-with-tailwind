@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import server from "./config"
 
 function ForgotPassword() {
 
   function resetRequest() {
     axios
-      .post('http://localhost:1337/auth/forgot-password', {
+      .post(`${server}auth/forgot-password`, {
         email: formValues.email, // user's email
       })
       .then(response => {

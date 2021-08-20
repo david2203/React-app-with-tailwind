@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import Card from "./card";
+import server from "./config"
 
 
 function ProductList() {
@@ -13,7 +14,7 @@ function ProductList() {
         // jwt gör att bara "legit" användare kan komma in
  
         const fetchProduct = async()=>{
-           const response =  await axios.get(`https://davidstrapi.herokuapp.com/products?_limit=${loadPage}`)
+           const response =  await axios.get(`${server}products?_limit=${loadPage}` )
            
           setProducts(response.data)
 

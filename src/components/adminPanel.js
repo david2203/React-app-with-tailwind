@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import {Link} from "react-router-dom";
 import axios from "axios"
+import server from "./config"
 
 
 
@@ -13,19 +14,19 @@ function AdminPanel() {
 
     useEffect(()=> {
         const fetchUsers = async()=>{
-            const res = await axios.get(`http://localhost:1337/users`)
+            const res = await axios.get(`${server}users`)
             setUsers(res.data.length)
         }
         fetchUsers()
 
         const fetchProduct = async()=>{
-            const response =  await axios.get(`http://localhost:1337/products`)
+            const response =  await axios.get(`${server}products`)
            setProducts(response.data.length)
          }
          fetchProduct()
 
          const fetchData = async ()=> {
-            const res = await axios.get(`http://localhost:1337/purchases`)
+            const res = await axios.get(`${server}purchases`)
             setPurchases(res.data.length)
         }
         fetchData()
