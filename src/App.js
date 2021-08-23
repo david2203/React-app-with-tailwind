@@ -5,9 +5,12 @@ import AppRoute from "./components/appRoute";
 
 
 
+
 function App() {
+  console.log("hej from app")
   return (
     <div className="App">
+
       <AppRoute/>
     </div>
   );
