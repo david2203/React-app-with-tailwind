@@ -3,7 +3,7 @@ import Modal from "react-modal";
 import axios from "axios";
 import dotenv from 'dotenv';
 import firestore from "../firebaseConfig";
-import server from "./config"
+import server, { server2 } from "./config"
 // import { loadStripe } from '@stripe/stripe-js';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
@@ -194,7 +194,7 @@ const [editProductValues, setEditProductValues] = useState(editedValues)
 
             <div className="py-6 mx-6" >
   <div className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
-      <div className="w-1/3 bg-cover" > <img src={`http://localhost:1337${image.formats.small.url}`} alt=""/>
+      <div className="w-1/3 bg-cover" > <img src={`${server2}${image.formats.small.url}`} alt=""/>
     </div> 
     <div className="w-2/3 p-4">
       <h1 className="text-gray-900 font-bold text-2xl">{productName}</h1>
