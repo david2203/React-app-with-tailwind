@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, createContext, useEffect} from "react";
 import {Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import server from "./config"
+import ProfileContext from "./profileContext"
 
+const UserInfo = createContext;
 
 export default function Login() {
 
@@ -13,13 +15,18 @@ export default function Login() {
     }
     const [formValues, setFormValues] = useState(initialValues)
     const [error, setError] = useState("")
-    
-    
+    const [jwt, setJwt] = useState("hej")
     const history = useHistory();
     
     function handleOnChange(e) {
         setFormValues({...formValues,[e.target.name]:e.target.value})
     }
+
+    useEffect( ()=>{
+
+    },[])
+
+    
 
     function handleOnSubmit(e) {
         e.preventDefault();
@@ -30,6 +37,8 @@ export default function Login() {
           password: formValues.password,
         })
         .then(response => {
+
+        setJwt(response.data.jwt)
           localStorage.setItem("jwt", response.data.jwt)
           localStorage.setItem("userId", response.data.user.id)
           localStorage.setItem("userEmail", response.data.user.email)
@@ -99,6 +108,11 @@ export default function Login() {
                     </div>
                 </div>
             </div>
+            {/* <UserInfo.Provider value={jwt}>
+                <ProfileContext/>                          
+            </UserInfo.Provider> */}
         </>
     )
 }
+
+export {UserInfo}
